@@ -2,6 +2,13 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "domainNameLabel": {
+        "type" : "String",
+        "metadata": {
+            "description": "Base name for all resources"
+        }
+
+    },
     "newStorageAccountName": {
       "type": "string",
       "metadata": {
@@ -36,21 +43,21 @@
   "variables": {
     "imagePublisher": "Canonical",
     "imageOffer": "UbuntuServer",
-    "ubuntuOSVersion": "15.10",
+    "ubuntuOSVersion": "16.04.0-LTS",
     "OSDiskName": "osdiskfordockersimple",
-    "nsgName": "myNSG",
-    "nicName": "myVMNic",
+    "nsgName": "[concat(parameters('domainNameLabel'), 'NSG']",
+    "nicName": "[concat(parameters('domainNameLabel'), 'VMNic']",
     "extensionName": "DockerExtension",
     "addressPrefix": "10.0.0.0/16",
     "subnetName": "Subnet",
     "subnetPrefix": "10.0.0.0/24",
     "storageAccountType": "Standard_LRS",
-    "publicIPAddressName": "myPublicIP",
+    "publicIPAddressName": "[concat(parameters('domainNameLabel'), 'PublicIP']",
     "publicIPAddressType": "Dynamic",
     "vmStorageAccountContainerName": "vhds",
-    "vmName": "MyDockerVM",
+    "vmName": "[concat(parameters('domainNameLabel'), 'DockerVM']",
     "vmSize": "Standard_D1",
-    "virtualNetworkName": "MyVNET",
+    "virtualNetworkName": "[concat(parameters('domainNameLabel'), 'VNET']",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
     "nsgID": "[resourceId('Microsoft.Network/networkSecurityGroups',variables('nsgName'))]",
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]"
